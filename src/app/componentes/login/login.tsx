@@ -40,9 +40,7 @@ export default function LoginComponent({
 
     if (email === "teste@escola.com" && password === "senha123") {
       if (onLoginSuccess) {
-        onLoginSuccess();
-      } else {
-        alert("Login bem-sucedido!");
+        onLoginSuccess(); // redirecionamento acontece no page.tsx
       }
     } else {
       setError("Email ou senha inválidos.");
