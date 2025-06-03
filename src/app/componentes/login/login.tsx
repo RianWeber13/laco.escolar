@@ -39,9 +39,8 @@ export default function LoginComponent({
     await new Promise((res) => setTimeout(res, 1000)); // Simula delay
 
     if (email === "teste@escola.com" && password === "senha123") {
-      if (onLoginSuccess) {
-        onLoginSuccess(); // redirecionamento acontece no page.tsx
-      }
+      localStorage.setItem("isLoggedIn", "true"); // salva login
+      if (onLoginSuccess) onLoginSuccess(); // informa sucesso
     } else {
       setError("Email ou senha inválidos.");
     }
