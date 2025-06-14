@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import styles from "./navbar.module.css";
+
 export interface NavItemInterface {
   url: string;
   label: string;
@@ -6,8 +8,8 @@ export interface NavItemInterface {
 
 export default function NavItem(props: NavItemInterface) {
   return (
-    <li className="nav-item">
-      <Link href={props.url} className="nav-link">
+    <li className={styles.navItem}>
+      <Link href={props.url} className={styles.navLink}>
         {props.label}
       </Link>
     </li>

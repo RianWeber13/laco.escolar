@@ -3,6 +3,7 @@
 
 import Link from 'next/link';
 import NavItem, { NavItemInterface } from './navitems';
+import styles from "./navbar.module.css";
 
 interface NavBarProps {
   onLogout: () => void;
@@ -10,22 +11,22 @@ interface NavBarProps {
 
 export default function NavBar({ onLogout }: NavBarProps) {
   const items: NavItemInterface[] = [
-    { url: '/', label: 'inicio' },
-    { url: '/noticias', label: 'noticias' },
-    { url: '/eventos', label: 'eventos' },
-    { url: '/tarefas', label: 'tarefas' },
-    { url: '/comunicacao', label: 'comunicação' },
+    { url: '/', label: 'Início' },
+    { url: '/noticias', label: 'Notícias' },
+    { url: '/eventos', label: 'Eventos' },
+    { url: '/tarefas', label: 'Tarefas' },
+    { url: '/comunicacao', label: 'Comunicação' },
   ];
 
   return (
-    <header>
-      <nav className="navbar">
-        <ul className="nav-items">
+    <header className={styles.navbar}>
+      <nav>
+        <ul className={styles.navItems}>
           {items.map((item, index) => (
             <NavItem key={index} url={item.url} label={item.label} />
           ))}
-          <li className="nav-item">
-            <button onClick={onLogout} className="nav-link">
+          <li className={styles.navItem}>
+            <button onClick={onLogout} className={styles.navLink}>
               Sair
             </button>
           </li>
