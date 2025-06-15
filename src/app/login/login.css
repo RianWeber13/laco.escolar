@@ -1,36 +1,41 @@
-/* src/app/componentes/login/login.module.css */
-
 .loginContainer {
   display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center;     /* Centraliza verticalmente */
   height: 100vh;
   width: 100%;
   background-color: #ffffff;
 }
 
 .loginBox {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  max-width: 400px; /* Limita a largura para uma boa leitura */
   padding: 2rem;
   background: linear-gradient(135deg, #FFB347, #FFCC33); /* gradiente amarelo-laranja */
   color: #fff;
+  border-radius: 10px; /* Cantos arredondados */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .logo {
   margin-bottom: 1rem;
+  object-fit: contain;
 }
 
 .title {
   font-size: 2rem;
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 0.5rem;
+  text-align: center;
 }
 
 .subtitle {
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .error {
@@ -40,6 +45,9 @@
   border-radius: 5px;
   margin-bottom: 1rem;
   text-align: center;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
 }
 
 .loginForm {
@@ -55,6 +63,7 @@
   border-radius: 5px;
   margin-bottom: 1rem;
   font-size: 1rem;
+  box-sizing: border-box;
 }
 
 .input:disabled {
@@ -69,9 +78,9 @@
   background-color: #ff7f50;
   color: #fff;
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 .button:disabled {

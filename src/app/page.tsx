@@ -2,19 +2,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import LoginComponent from "./componentes/login/login";
-import Inicio from "./componentes/inicio/inicio";
-import NavBar from "./componentes/navbar/navBar";
+import LoginComponent from "./login/page";
+import NavBar from "./navbar/navBar";
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    const logged = localStorage.getItem("isLoggedIn");
-    if (logged === "true") {
-      setIsLoggedIn(true);
-    }
-  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
@@ -32,7 +25,7 @@ export default function Home() {
   return (
     <main>
       <NavBar onLogout={handleLogout} />
-      <Inicio />
+      <LoginComponent />
     </main>
   );
 }

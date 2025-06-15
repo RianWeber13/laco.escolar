@@ -1,8 +1,8 @@
-// src/app/componentes/login/login.tsx
 "use client";
 
+import "./login.css";
 import { useState, FormEvent } from "react";
-import styles from "./login.module.css";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 interface LoginProps {
@@ -14,7 +14,6 @@ interface LoginProps {
 }
 
 export default function LoginComponent({
-  onLoginSuccess,
   logoSrc = "/logo-escola.png",
   logoAlt = "Logo da Escola",
   title = "Acesso ao Sistema",
@@ -24,6 +23,8 @@ export default function LoginComponent({
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter(); // Hook para redirecionamento
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -38,9 +39,8 @@ export default function LoginComponent({
 
     await new Promise((res) => setTimeout(res, 1000)); // Simula delay
 
-    if (email === "teste@escola.com" && password === "senha123") {
-      localStorage.setItem("isLoggedIn", "true"); // salva login
-      if (onLoginSuccess) onLoginSuccess(); // informa sucesso
+    if (email === "teste@escola.com" && password === "123") {
+      router.push("/noticias"); // Redireciona para /noticias
     } else {
       setError("Email ou senha inválidos.");
     }
@@ -49,27 +49,27 @@ export default function LoginComponent({
   };
 
   return (
-    <div className={styles.loginContainer}>
-      <div className={styles.loginBox}>
+    <div className="loginContainer">
+      <div className="loginBox">
         <Image
           src={logoSrc}
           alt={logoAlt}
           width={120}
           height={60}
-          className={styles.logo}
+          className="logo"
         />
-        <h1 className={styles.title}>{title}</h1>
-        <p className={styles.subtitle}>{subtitle}</p>
+        <h1 className="title">{title}</h1>
+        <p className="subtitle">{subtitle}</p>
 
-        {error && <p className={styles.error}>{error}</p>}
+        {error && <p className="error">{error}</p>}
 
-        <form onSubmit={handleSubmit} className={styles.loginForm}>
+        <form onSubmit={handleSubmit} className="loginForm">
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={styles.input}
+            className="input"
             disabled={isLoading}
             required
           />
@@ -78,11 +78,11 @@ export default function LoginComponent({
             placeholder="Senha"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className={styles.input}
+            className="input"
             disabled={isLoading}
             required
           />
-          <button type="submit" className={styles.button} disabled={isLoading}>
+          <button type="submit" className="button" disabled={isLoading}>
             {isLoading ? "Entrando..." : "Entrar"}
           </button>
         </form>
@@ -90,3 +90,4 @@ export default function LoginComponent({
     </div>
   );
 }
+``
