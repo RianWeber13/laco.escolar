@@ -1,0 +1,134 @@
+/* Container principal da página de notícias */
+.noticias-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+/* Título principal */
+.noticias-title {
+  color: #333;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+}
+
+/* Formulário para criar uma nova postagem */
+.new-post-form {
+  background-color: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.new-post-form textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  resize: vertical; /* Permite redimensionamento vertical */
+  margin-bottom: 1rem;
+}
+
+.new-post-form button {
+  display: block;
+  width: auto;
+  margin-left: auto; /* Alinha o botão à direita */
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff; /* Cor primária azul */
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.new-post-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Container do feed de notícias */
+.feed-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Card de cada notícia individual */
+.post-card {
+  background-color: #ffffff;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Cabeçalho da postagem */
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 0.8rem;
+}
+
+.post-author {
+  font-weight: bold;
+  color: #333;
+}
+
+.post-date {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+/* Conteúdo da postagem */
+.post-content {
+  color: #555;
+  line-height: 1.6;
+}
+/* Estilo para aplicar a imagem de fundo na página inteira */
+.noticias-page-wrapper {
+  /* Caminho para a imagem que você salvou em public/images */
+  background-image: url('/images/noticiasweb.png');
+  
+  /* Cobre toda a área da tela */
+  background-size: cover; 
+  
+  /* Centraliza a imagem */
+  background-position: center; 
+  
+  /* Mantém a imagem de fundo fixa ao rolar a página */
+  background-attachment: fixed; 
+  
+  /* Garante que o contêiner ocupe pelo menos 100% da altura da tela */
+  min-height: 100vh; 
+  
+  /* Adiciona um pouco de preenchimento para não colar nas bordas */
+  padding-bottom: 2rem; 
+}
+
+
+/* Container principal da página de notícias */
+.noticias-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  
+  /* Adiciona um fundo branco semi-transparente para melhorar a leitura */
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+}
