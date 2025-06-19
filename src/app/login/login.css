@@ -2,23 +2,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 98vh;
   width: 100%;
-  
-  /* --- Adicione ou modifique estas linhas --- */
   background-image: url('/images/inicioweb.png'); /* Caminho para sua imagem */
   background-size: cover; /* Faz a imagem cobrir todo o container */
   background-position:  center ; /* Centraliza a imagem */
   background-repeat: no-repeat; /* Evita que a imagem se repita */
   background-color: #f0f0f0; /* Cor de fallback, caso a imagem não carregue */
-  /* --- Fim das modificações --- */
 }
 
 .loginBox {
-  width: 100%;
+  width: 120%;
   max-width: 400px;
   padding: 2rem;
-  background: linear-gradient(135deg, #FFB347, #FFCC33);
+  background: linear-gradient(135deg,  #EAF4FF,  #EAF4FF);
   color: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -29,21 +26,30 @@
 
 
 .logo {
+  width: 300px; /* aumente aqui */
+  height: 300px; /* defina uma altura ou use auto */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
   margin-bottom: 1rem;
-  object-fit: contain;
+  
 }
+
 
 .title {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
   text-align: center;
+  color: #333;
 }
 
 .subtitle {
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
   text-align: center;
+  color:#333
 }
 
 .error {
@@ -72,6 +78,9 @@
   margin-bottom: 1rem;
   font-size: 1rem;
   box-sizing: border-box;
+  background-color: #fff;
+  color: #333;
+  transition: border-color 0.3s ease;
 }
 
 .input:disabled {
@@ -83,7 +92,7 @@
   padding: 0.75rem 1rem;
   border: none;
   border-radius: 5px;
-  background-color: #ff7f50;
+  background-color: #E65A29;
   color: #fff;
   font-size: 1rem;
   font-weight: 700;

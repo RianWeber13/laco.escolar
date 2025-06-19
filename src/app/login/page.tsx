@@ -14,10 +14,10 @@ interface LoginProps {
 }
 
 export default function LoginComponent({
-  logoSrc = "/logo-escola.png",
+  logoSrc = "/images/logoweb.png",
   logoAlt = "Logo da Escola",
-  title = "Acesso ao Sistema",
-  subtitle = "Laço Escolar",
+  title = "Laço Escolar",
+  subtitle = "Acesso ao Sistema",
 }: LoginProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
