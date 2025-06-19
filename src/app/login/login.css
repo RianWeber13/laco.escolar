@@ -1,24 +1,32 @@
 .loginContainer {
   display: flex;
-  justify-content: center; /* Centraliza horizontalmente */
-  align-items: center;     /* Centraliza verticalmente */
+  justify-content: center;
+  align-items: center;
   height: 100vh;
   width: 100%;
-  background-color: #ffffff;
+  
+  /* --- Adicione ou modifique estas linhas --- */
+  background-image: url('/images/inicioweb.png'); /* Caminho para sua imagem */
+  background-size: cover; /* Faz a imagem cobrir todo o container */
+  background-position:  center ; /* Centraliza a imagem */
+  background-repeat: no-repeat; /* Evita que a imagem se repita */
+  background-color: #f0f0f0; /* Cor de fallback, caso a imagem não carregue */
+  /* --- Fim das modificações --- */
 }
 
 .loginBox {
   width: 100%;
-  max-width: 400px; /* Limita a largura para uma boa leitura */
+  max-width: 400px;
   padding: 2rem;
-  background: linear-gradient(135deg, #FFB347, #FFCC33); /* gradiente amarelo-laranja */
+  background: linear-gradient(135deg, #FFB347, #FFCC33);
   color: #fff;
-  border-radius: 10px; /* Cantos arredondados */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 
 .logo {
   margin-bottom: 1rem;
