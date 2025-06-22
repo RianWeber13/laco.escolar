@@ -1,0 +1,65 @@
+
+
+.calendario-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 700px;
+  margin: auto;
+  text-align: center;
+}
+
+.controles {
+  margin-bottom: 20px;
+}
+
+.tipo-select label {
+  margin: 0 10px;
+}
+
+.calendario-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.dia {
+  border: 1px solid #ccc;
+  padding: 10px;
+  min-height: 60px;
+  cursor: pointer;
+}
+
+.dia:hover {
+  background-color: #eee;
+}
+
+.cabecalho {
+  font-weight: bold;
+  background-color: #f2f2f2;
+}
+
+.vazio {
+  background-color: transparent;
+  border: none;
+  cursor: default;
+}
+
+/* Tipos de dias */
+.letivo {
+  background-color: #b3e6b3;
+}
+
+.facultativo {
+  background-color: #fff2b3;
+}
+
+.evento {
+  background-color: #b3d1ff;
+}
+
+
+.feriado {
+  background-color: #ffcccc; /* vermelho claro */
+  color: darkred;
+  font-weight: bold;
+}
