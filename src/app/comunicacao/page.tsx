@@ -13,9 +13,11 @@ export default function comunicacao() {
   };
 
   return (
-    <div>
+    <>
       <NavBar onLogout={handleLogout} />
-      <h1>Comunicação</h1>
-    </div>
+      <div>
+        <h1>Comunicação</h1>
+      </div>
+    </>
   );
 }
