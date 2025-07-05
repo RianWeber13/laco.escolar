@@ -54,7 +54,7 @@ const NoticiasPage = () => {
   return (
     // Adiciona a div que envolve toda a página
     <div className="noticias-page-wrapper"> 
-      <NavBar />
+      <NavBar onLogout={() => { /* TODO: implement logout logic */ }} />
       <main className="noticias-container">
         <h1 className="noticias-title">Mural de Notícias</h1>
 
