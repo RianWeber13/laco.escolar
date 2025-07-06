@@ -1,66 +1,109 @@
-
-
-.calendario-container {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  max-width: 700px;
-  margin: auto;
-  text-align: center;
+/* Estilo geral para a página do calendário */
+.calendario-page-wrapper {
+  background-color: #f0f2f5;
+  min-height: 100vh;
+  width: 100%;
+  padding: 2rem 1rem;
 }
 
-.controles {
-  margin-bottom: 20px;
+.container-calendario {
+  max-width: 1200px; /* Aumentado para dar mais espaço */
+  margin: 0 auto;
 }
 
-.tipo-select label {
-  margin: 0 10px;
+/* Container principal com o fundo laranja */
+.calendario-visual-container {
+  background-color: #fde6ce;
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
+/* Header com mês, ano e botões de navegação */
+.calendario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.mes-ano-titulo {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #3C3C3C;
+}
+
+.nav-button {
+  background: #fff;
+  border: 1px solid #fbd3a3;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 1.8rem;
+  color: #d95d13;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.nav-button:hover {
+  background-color: #ff9d57;
+  color: #fff;
+}
+
+/* Grid do Calendário */
 .calendario-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
+  gap: 0.75rem; /* Espaçamento entre os dias */
 }
 
-.dia {
-  border: 1px solid #ccc;
-  padding: 10px;
-  min-height: 60px;
-  cursor: pointer;
+.dia-semana {
+  text-align: center;
+  font-weight: 700;
+  color: #d95d13;
+  padding-bottom: 1rem;
+  font-size: 1rem;
 }
 
-.dia:hover {
-  background-color: #eee;
+.dia-vazio {
+  visibility: hidden;
 }
 
-.cabecalho {
+.dia-calendario {
+  border: 1px solid #fbd3a3;
+  min-height: 120px; /* Aumenta a altura para caber o texto */
+  padding: 0.75rem;
+  border-radius: 12px;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Espaça o número do dia e o nome do feriado */
+}
+
+.numero-dia {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.nome-feriado {
+  font-size: 0.8rem;
+  line-height: 1.3;
+  font-weight: 600;
+  text-align: right; /* Alinha o texto do feriado à direita */
+}
+
+/* Cores para os dias */
+.dia-calendario.letivo { 
+  background-color: #fff; 
+  cursor: default; /* Remove o cursor de "ponteiro" dos dias letivos */
+}
+.dia-calendario.feriado {
+  background-color: #fed7d7;
   font-weight: bold;
-  background-color: #f2f2f2;
+  color: #c53030;
+  cursor: help; /* Mostra um cursor de ajuda sobre os feriados */
 }
-
-.vazio {
-  background-color: transparent;
-  border: none;
-  cursor: default;
-}
-
-/* Tipos de dias */
-.letivo {
-  background-color: #b3e6b3;
-}
-
-.facultativo {
-  background-color: #fff2b3;
-}
-
-.evento {
-  background-color: #b3d1ff;
-}
-
-
-.feriado {
-  background-color: #ffcccc; /* vermelho claro */
-  color: darkred;
-  font-weight: bold;
-}
-

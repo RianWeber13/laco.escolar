@@ -38,7 +38,7 @@ const NoticiasPage = () => {
 
     const novaNoticia: Noticia = {
       id: noticias.length + 1,
-      autor: 'Professor(a)',
+      autor: 'Você', // Assumindo que o usuário logado está publicando
       data: new Date().toLocaleDateString('pt-BR', {
         day: 'numeric',
         month: 'long',
@@ -52,36 +52,42 @@ const NoticiasPage = () => {
   };
 
   return (
-    // Adiciona a div que envolve toda a página
-    <div className="noticias-page-wrapper"> 
+    <div className="noticias-page-wrapper">
       <NavBar onLogout={() => { /* TODO: implement logout logic */ }} />
-      <main className="noticias-container">
-        <h1 className="noticias-title">Mural de Notícias</h1>
+      <div className="container-noticias">
+        <h1 className="main-title-noticias">Mural de Notícias</h1>
 
-        <div className="new-post-form">
-          <form onSubmit={handlePublicarNoticia}>
-            <textarea
-              placeholder="Escreva uma nova notícia aqui..."
-              value={novoConteudo}
-              onChange={(e) => setNovoConteudo(e.target.value)}
-              rows={4}
-            />
-            <button type="submit">Publicar</button>
-          </form>
-        </div>
+        <div className="noticias-container-visual">
+          {/* Formulário para criar uma nova postagem */}
+          <div className="new-post-form">
+            <form onSubmit={handlePublicarNoticia}>
+              <textarea
+                placeholder="Escreva uma nova notícia aqui..."
+                value={novoConteudo}
+                onChange={(e) => setNovoConteudo(e.target.value)}
+                rows={4}
+                className="post-textarea"
+              />
+              <button type="submit" className="post-button">Publicar</button>
+            </form>
+          </div>
 
-        <div className="feed-container">
-          {noticias.map((noticia) => (
-            <div key={noticia.id} className="post-card">
-              <div className="post-header">
-                <span className="post-author">{noticia.autor}</span>
-                <span className="post-date">{noticia.data}</span>
+          {/* Feed de notícias */}
+          <div className="feed-container">
+            {noticias.map((noticia) => (
+              <div key={noticia.id} className="post-card">
+                <div className="post-header">
+                  <span className="post-author">{noticia.autor}</span>
+                  <span className="post-date">{noticia.data}</span>
+                </div>
+                <div className="post-content">
+                  <p>{noticia.conteudo}</p>
+                </div>
               </div>
-              <p className="post-content">{noticia.conteudo}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 };

@@ -5,138 +5,108 @@ import NavBar from "../navbar/navBar";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-export default function Calendario() {
+// Definição do tipo para o dia marcado (simplificado)
+type DiaFeriado = {
+  tipo: 'feriado';
+  nome: string;
+};
+
+type DiasMarcadosState = {
+  [chave: string]: DiaFeriado;
+};
+
+export default function CalendarioPage() {
   const router = useRouter();
   const [mes, setMes] = useState(new Date().getMonth());
   const [ano, setAno] = useState(new Date().getFullYear());
-  const [tipoSelecionado, setTipoSelecionado] = useState("letivo");
-  const [diasMarcados, setDiasMarcados] = useState({});
+  const [diasMarcados, setDiasMarcados] = useState<DiasMarcadosState>({});
 
   const nomesMeses = [
     "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
     "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
   ];
-
   const diasSemana = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    router.push("/login");
-  };
-
-  const handleDiaClick = (dia) => {
-    const chave = `${ano}-${mes + 1}-${dia}`;
-    setDiasMarcados((prev) => {
-      const novo = { ...prev };
-      if (tipoSelecionado === "limpar") {
-        delete novo[chave];
-      } else {
-        novo[chave] = {
-          tipo: tipoSelecionado,
-          nome: tipoSelecionado === "feriado" ? "Feriado" : ""
-        };
-      }
-      return novo;
-    });
-  };
-
-  const getClasseDia = (dia) => {
-    const chave = `${ano}-${mes + 1}-${dia}`;
-    return diasMarcados[chave]?.tipo || "";
-  };
-
-  const getTituloDia = (dia) => {
-    const chave = `${ano}-${mes + 1}-${dia}`;
-    return diasMarcados[chave]?.nome || "";
-  };
-
-  const diasNoMes = new Date(ano, mes + 1, 0).getDate();
-  const primeiroDiaSemana = new Date(ano, mes, 1).getDay();
-
+  // Efeito para buscar feriados nacionais
   useEffect(() => {
     async function carregarFeriados() {
       try {
         const res = await fetch(`https://brasilapi.com.br/api/feriados/v1/${ano}`);
-        const feriados = await res.json();
-
-        const novos = {};
-        feriados.forEach((f) => {
-          const data = new Date(f.date + "T00:00:00");
+        const feriadosApi = await res.json();
+        
+        const novosFeriados: DiasMarcadosState = {};
+        feriadosApi.forEach((feriado: any) => {
+          // CORREÇÃO DA DATA: Adiciona T00:00:00 para forçar o fuso horário local
+          const data = new Date(`${feriado.date}T00:00:00`);
           const chave = `${data.getFullYear()}-${data.getMonth() + 1}-${data.getDate()}`;
-          novos[chave] = {
-            tipo: "feriado",
-            nome: f.name
-          };
+          novosFeriados[chave] = { tipo: "feriado", nome: feriado.name };
         });
 
-        setDiasMarcados((prev) => ({ ...novos, ...prev }));
+        setDiasMarcados(novosFeriados);
       } catch (error) {
         console.error("Erro ao carregar feriados:", error);
       }
     }
-
     carregarFeriados();
-  }, [ano]);
+  }, [ano]); // Recarrega os feriados sempre que o ano muda
+
+  const diasNoMes = new Date(ano, mes + 1, 0).getDate();
+  const primeiroDiaSemana = new Date(ano, mes, 1).getDay();
+  
+  // Função para mudar para o mês anterior
+  const mesAnterior = () => {
+    if (mes === 0) {
+      setMes(11);
+      setAno(ano - 1);
+    } else {
+      setMes(mes - 1);
+    }
+  };
+
+  // Função para mudar para o próximo mês
+  const proximoMes = () => {
+    if (mes === 11) {
+      setMes(0);
+      setAno(ano + 1);
+    } else {
+      setMes(mes + 1);
+    }
+  };
 
   return (
-    <>
-      <NavBar onLogout={handleLogout} />
-      <div className="calendario-container">
-        <h1>Calendário Escolar</h1>
+    <div className="calendario-page-wrapper">
+      <NavBar onLogout={() => router.push('/login')} />
+      <div className="container-calendario">
+        <div className="calendario-visual-container">
+          {/* Header com Navegação e Título */}
+          <div className="calendario-header">
+            <button onClick={mesAnterior} className="nav-button" title="Mês anterior">‹</button>
+            <div className="mes-ano-titulo">{`${nomesMeses[mes]} de ${ano}`}</div>
+            <button onClick={proximoMes} className="nav-button" title="Próximo mês">›</button>
+          </div>
 
-        <div className="controles">
-          <select value={mes} onChange={(e) => setMes(Number(e.target.value))}>
-            {nomesMeses.map((m, i) => (
-              <option key={i} value={i}>{m}</option>
-            ))}
-          </select>
+          {/* Grid do Calendário */}
+          <div className="calendario-grid">
+            {diasSemana.map((dia, i) => <div key={i} className="dia-semana">{dia}</div>)}
+            {Array.from({ length: primeiroDiaSemana }).map((_, i) => <div key={`vazio-${i}`} className="dia-vazio"></div>)}
+            {Array.from({ length: diasNoMes }).map((_, i) => {
+              const dia = i + 1;
+              const chave = `${ano}-${mes + 1}-${dia}`;
+              const diaMarcado = diasMarcados[chave];
+              
+              // Define a classe: 'feriado' se for feriado, senão 'letivo'
+              const classeDia = diaMarcado ? diaMarcado.tipo : 'letivo';
 
-          <select value={ano} onChange={(e) => setAno(Number(e.target.value))}>
-            {Array.from({ length: 11 }, (_, i) => ano - 5 + i).map((y) => (
-              <option key={y} value={y}>{y}</option>
-            ))}
-          </select>
-
-          <div className="tipo-select">
-            {["letivo", "facultativo", "evento", "limpar"].map((tipo) => (
-              <label key={tipo}>
-                <input
-                  type="radio"
-                  name="tipo"
-                  value={tipo}
-                  checked={tipoSelecionado === tipo}
-                  onChange={() => setTipoSelecionado(tipo)}
-                />
-                {tipo.charAt(0).toUpperCase() + tipo.slice(1)}
-              </label>
-            ))}
+              return (
+                <div key={dia} className={`dia-calendario ${classeDia}`}>
+                  <span className="numero-dia">{dia}</span>
+                  {diaMarcado?.nome && <span className="nome-feriado">{diaMarcado.nome}</span>}
+                </div>
+              );
+            })}
           </div>
         </div>
-
-        <div className="calendario-grid">
-          {diasSemana.map((dia, i) => (
-            <div key={i} className="dia cabecalho">{dia}</div>
-          ))}
-
-          {Array.from({ length: primeiroDiaSemana }, (_, i) => (
-            <div key={`vazio-${i}`} className="dia vazio"></div>
-          ))}
-
-          {Array.from({ length: diasNoMes }, (_, i) => {
-            const dia = i + 1;
-            return (
-              <div
-                key={dia}
-                className={`dia ${getClasseDia(dia)}`}
-                onClick={() => handleDiaClick(dia)}
-                title={getTituloDia(dia)}
-              >
-                {dia}
-              </div>
-            );
-          })}
-        </div>
       </div>
-    </>
+    </div>
   );
 }

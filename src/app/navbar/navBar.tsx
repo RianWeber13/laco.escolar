@@ -1,5 +1,8 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import NavItem, { NavItemInterface } from './navitems';
 import { usePathname } from 'next/navigation';
 import './navbar.css';
@@ -32,27 +35,42 @@ export default function NavBar({ onLogout }: NavBarProps) {
   }, []);
 
   return (
-    <header className="navbar">
-      <nav>
-        <button className="btnmobile" onClick={() => setOpenMenu(!openMenu)}>
-          <FaBars />
-        </button>
-        <ul className={`navItems ${openMenu ? 'open' : ''}`}>
-          {items.map((item, index) => (
-            <NavItem 
-              key={index} 
-              url={item.url} 
-              label={item.label}
-              isActive={pathname === item.url}
-            />
-          ))}
-          <li className="navItem">
-            <button onClick={onLogout} className="btnSair">
-              Sair
-            </button>
-          </li>
-        </ul>
-      </nav>
+    <header className="navbar-container">
+      <div className="navbar-content">
+        {/* Seção da Logo */}
+        <div className="logo-section">
+          <Image src="/images/logoweb.png" alt="Laço Escolar Logo" width={100} height={100} />
+          <span className="logo-text">LAÇO ESCOLAR</span>
+        </div>
+
+        {/* Seção dos Links de Navegação */}
+        <nav className="nav-section">
+          <button className="btnmobile" onClick={() => setOpenMenu(!openMenu)}>
+            <FaBars />
+          </button>
+          <ul className={`nav-items ${openMenu ? 'open' : ''}`}>
+            {items.map((item, index) => (
+              <NavItem 
+                key={index} 
+                url={item.url} 
+                label={item.label}
+                isActive={pathname === item.url}
+              />
+            ))}
+          </ul>
+        </nav>
+
+        {/* Seção do Usuário */}
+        <div className="user-section">
+          <div className="user-info">
+            <span className="user-name">Docente Ana</span>
+            <span className="user-details">Escola Estadual La Salle | Turma 8ºA - Matutino</span>
+          </div>
+          <button onClick={onLogout} className="btn-sair">
+            SAIR
+          </button>
+        </div>
+      </div>
     </header>
   );
 }

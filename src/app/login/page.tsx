@@ -5,31 +5,18 @@ import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-interface LoginProps {
-  onLoginSuccess?: () => void;
-  logoSrc?: string;
-  logoAlt?: string;
-  title?: string;
-  subtitle?: string;
-}
-
-export default function LoginComponent({
-  logoSrc = "/images/logoweb.png",
-  logoAlt = "Logo da Escola",
-  title = "Laço Escolar",
-  subtitle = "Acesso ao Sistema",
-}: LoginProps) {
+export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const router = useRouter(); // Hook para redirecionamento
+  const router = useRouter(); 
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setError("");
     setIsLoading(true);
+    setError("");
 
     if (!email || !password) {
       setError("Por favor, preencha todos os campos.");
@@ -37,57 +24,69 @@ export default function LoginComponent({
       return;
     }
 
-    await new Promise((res) => setTimeout(res, 1000)); // Simula delay
-
+    await new Promise(r => setTimeout(r, 1000));
     if (email === "teste@escola.com" && password === "123") {
-      router.push("/noticias"); // Redireciona para /noticias
+      router.push("/noticias"); 
     } else {
       setError("Email ou senha inválidos.");
     }
-
     setIsLoading(false);
   };
 
   return (
-    <div className="loginContainer">
-      <div className="loginBox">
-        <Image
-          src={logoSrc}
-          alt={logoAlt}
-          width={120}
-          height={60}
-          className="logo"
-        />
-        <h1 className="title">{title}</h1>
-        <p className="subtitle">{subtitle}</p>
-
-        {error && <p className="error">{error}</p>}
-
-        <form onSubmit={handleSubmit} className="loginForm">
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="input"
-            disabled={isLoading}
-            required
+    <div className="login-page-wrapper">
+      <main className="main-container">
+        <div className="illustration-section">
+          <Image
+            src="/images/login-illustration.png"
+            alt="Ilustração de uma pessoa ajudando uma criança com os estudos"
+            fill
+            className="illustration-image"
+            priority
           />
-          <input
-            type="password"
-            placeholder="Senha"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="input"
-            disabled={isLoading}
-            required
-          />
-          <button type="submit" className="button" disabled={isLoading}>
-            {isLoading ? "Entrando..." : "Entrar"}
-          </button>
-        </form>
-      </div>
+        </div>
+
+        <div className="form-section">
+          <div className="login-box">
+            <div className="logo-container">
+              <Image
+                src="/images/logoweb.png"
+                alt="Logo Laço Escolar"
+                width={300}
+                height={300}
+              />
+            </div>
+            <h1 className="title">Laço Escolar</h1>
+            <p className="subtitle">Acesse o sistema</p>
+
+            {error && <p className="error-message">{error}</p>}
+
+            <form onSubmit={handleSubmit} className="login-form">
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="input-field"
+                disabled={isLoading}
+                required
+              />
+              <input
+                type="password"
+                placeholder="Senha"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="input-field"
+                disabled={isLoading}
+                required
+              />
+              <button type="submit" className="submit-button" disabled={isLoading}>
+                {isLoading ? "Entrando..." : "Entrar"}
+              </button>
+            </form>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
-``

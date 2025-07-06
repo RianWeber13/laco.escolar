@@ -1,55 +1,81 @@
-/* Container principal da página de notícias */
-.noticias-container {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 2rem;
-  font-family: Arial, sans-serif;
+/* Estilo geral para a página de notícias */
+.noticias-page-wrapper {
+  background-color: #f0f2f5;
+  min-height: 100vh;
+  width: 100%;
+  padding: 2rem 1rem;
 }
 
-/* Título principal */
-.noticias-title {
-  color: #333;
+.container-noticias {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.main-title-noticias {
+  color: #3C3C3C;
   text-align: center;
   margin-bottom: 2rem;
-  font-size: 2.5rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+/* Container principal com o fundo laranja claro */
+.noticias-container-visual {
+  background-color: #fde6ce;
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 /* Formulário para criar uma nova postagem */
 .new-post-form {
-  background-color: #f9f9f9;
+  background-color: #fff;
   padding: 1.5rem;
-  border-radius: 8px;
+  border-radius: 16px;
   margin-bottom: 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.new-post-form textarea {
+.post-textarea {
   width: 100%;
-  padding: 0.8rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
   font-size: 1rem;
-  resize: vertical; /* Permite redimensionamento vertical */
-  margin-bottom: 1rem;
+  background-color: #f8fafc; /* Fundo neutro */
+  color: #333;
+  resize: vertical;
+  min-height: 80px;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.new-post-form button {
-  display: block;
-  width: auto;
-  margin-left: auto; /* Alinha o botão à direita */
-  padding: 0.8rem 1.5rem;
+.post-textarea:focus {
+  outline: none;
+  border-color: #ff9d57;
+  box-shadow: 0 0 0 3px rgba(255, 157, 87, 0.3);
+}
+
+.new-post-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.post-button {
+  align-self: flex-end; /* Alinha o botão à direita */
+  background-color: #ff9d57;
+  color: #ffffff;
   border: none;
-  border-radius: 4px;
-  background-color: #007bff; /* Cor primária azul */
-  color: white;
-  font-size: 1rem;
   font-weight: bold;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s;
+  box-shadow: 0 2px 4px rgba(255, 157, 87, 0.4);
 }
 
-.new-post-form button:hover {
-  background-color: #0056b3;
+.post-button:hover {
+  background-color: #fba96c;
 }
 
 /* Container do feed de notícias */
@@ -62,73 +88,38 @@
 /* Card de cada notícia individual */
 .post-card {
   background-color: #ffffff;
-  border: 1px solid #eaeaea;
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+  overflow: hidden; /* Garante que os cantos arredondados funcionem */
 }
 
 .post-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.08);
 }
 
-/* Cabeçalho da postagem */
 .post-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid #f0f0f0;
-  padding-bottom: 0.8rem;
+  padding: 1rem 1.25rem;
+  background-color: #fff5e9;
+  border-bottom: 1px solid #fde6ce;
 }
 
 .post-author {
-  font-weight: bold;
-  color: #333;
+  font-weight: 700;
+  color: #d95d13;
 }
 
 .post-date {
   font-size: 0.85rem;
-  color: #888;
+  color: #777;
 }
 
-/* Conteúdo da postagem */
 .post-content {
+  padding: 1.25rem;
   color: #555;
   line-height: 1.6;
-}
-/* Estilo para aplicar a imagem de fundo na página inteira */
-.noticias-page-wrapper {
-  /* Caminho para a imagem que você salvou em public/images */
-  background-image: url('/images/noticiasweb.png');
-  
-  /* Cobre toda a área da tela */
-  background-size: cover; 
-  
-  /* Centraliza a imagem */
-  background-position: center; 
-  
-  /* Mantém a imagem de fundo fixa ao rolar a página */
-  background-attachment: fixed; 
-  
-  /* Garante que o contêiner ocupe pelo menos 100% da altura da tela */
-  min-height: 100vh; 
-  
-  /* Adiciona um pouco de preenchimento para não colar nas bordas */
-  padding-bottom: 2rem; 
-}
-
-
-/* Container principal da página de notícias */
-.noticias-container {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 2rem;
-  font-family: Arial, sans-serif;
-  
-  /* Adiciona um fundo branco semi-transparente para melhorar a leitura */
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 10px;
 }
