@@ -69,8 +69,7 @@ export default function ComunicacaoPage() {
   const turmaAtual = turmasMock.find(t => t.nome === turmaSelecionada);
 
   return (
-    <div className="comunicacao-page-wrapper">
-      <NavBar onLogout={() => { }} />
+    <><NavBar onLogout={() => { } } /><div className="comunicacao-page-wrapper">
       <div className="container-comunicacao">
 
         {/* --- VISUALIZAÇÃO 1: SELEÇÃO DE TURMA --- */}
@@ -142,14 +141,13 @@ export default function ComunicacaoPage() {
                 placeholder={`Mensagem para ${alunoSelecionado.responsavel}...`}
                 value={mensagem}
                 onChange={(e) => setMensagem(e.target.value)}
-                autoFocus
-              />
+                autoFocus />
               <button type="submit" className="enviar-btn">Enviar</button>
             </form>
           </div>
         )}
 
       </div>
-    </div>
+    </div></>
   );
 }

@@ -52,8 +52,7 @@ const NoticiasPage = () => {
   };
 
   return (
-    <div className="noticias-page-wrapper">
-      <NavBar onLogout={() => { /* TODO: implement logout logic */ }} />
+    <><NavBar onLogout={() => { } } /><div className="noticias-page-wrapper">
       <div className="container-noticias">
         <h1 className="main-title-noticias">Mural de Notícias</h1>
 
@@ -66,8 +65,7 @@ const NoticiasPage = () => {
                 value={novoConteudo}
                 onChange={(e) => setNovoConteudo(e.target.value)}
                 rows={4}
-                className="post-textarea"
-              />
+                className="post-textarea" />
               <button type="submit" className="post-button">Publicar</button>
             </form>
           </div>
@@ -88,7 +86,7 @@ const NoticiasPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div></>
   );
 };
 

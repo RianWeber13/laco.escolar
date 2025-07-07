@@ -40,14 +40,14 @@ export default function AtividadesPage() {
   };
 
   return (
+    <><NavBar onLogout={() => { } } />
     <div className="atividades-page-wrapper">
-      <NavBar onLogout={() => {}} />
       <div className="container-atividades">
         <h1 className="main-title-atividades">Painel de Atividades</h1>
-        
+
         {/* Container principal com o fundo laranja */}
         <div className="atividades-container">
-          
+
           {/* Formulário para adicionar nova atividade */}
           <div className="form-container">
             <h2 className="form-title">Adicionar Nova Atividade</h2>
@@ -70,8 +70,7 @@ export default function AtividadesPage() {
                 onChange={handleChange}
                 placeholder="Título da atividade"
                 required
-                className="form-input"
-              />
+                className="form-input" />
               <textarea
                 name="descricao"
                 value={form.descricao}
@@ -79,8 +78,7 @@ export default function AtividadesPage() {
                 placeholder="Descrição da atividade..."
                 required
                 className="form-textarea"
-                rows={4}
-              />
+                rows={4} />
               <button type="submit" className="form-button">Adicionar</button>
             </form>
           </div>
@@ -104,6 +102,6 @@ export default function AtividadesPage() {
           </div>
         </div>
       </div>
-    </div>
+    </div></>
   );
 }

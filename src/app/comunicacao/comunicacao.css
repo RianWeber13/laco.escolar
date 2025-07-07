@@ -212,6 +212,7 @@
   font-size: 1rem;
   outline: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  color: #000;
 }
 
 .enviar-btn {

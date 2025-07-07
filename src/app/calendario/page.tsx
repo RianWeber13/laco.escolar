@@ -74,8 +74,8 @@ export default function CalendarioPage() {
   };
 
   return (
+    <><NavBar onLogout={() => { } } />
     <div className="calendario-page-wrapper">
-      <NavBar onLogout={() => router.push('/login')} />
       <div className="container-calendario">
         <div className="calendario-visual-container">
           {/* Header com Navegação e Título */}
@@ -93,7 +93,7 @@ export default function CalendarioPage() {
               const dia = i + 1;
               const chave = `${ano}-${mes + 1}-${dia}`;
               const diaMarcado = diasMarcados[chave];
-              
+
               // Define a classe: 'feriado' se for feriado, senão 'letivo'
               const classeDia = diaMarcado ? diaMarcado.tipo : 'letivo';
 
@@ -107,6 +107,6 @@ export default function CalendarioPage() {
           </div>
         </div>
       </div>
-    </div>
+    </div></>
   );
 }
