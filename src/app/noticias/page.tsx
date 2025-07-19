@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import NavBar from '../navbar/navBar';
 import './noticias.css';
+import { useRouter } from 'next/navigation';
 
 interface Noticia {
   id: number;
@@ -28,6 +29,12 @@ const NoticiasPage = () => {
   ]);
 
   const [novoConteudo, setNovoConteudo] = useState('');
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn');
+    router.push('/');
+  };
 
   const handlePublicarNoticia = (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,7 +59,7 @@ const NoticiasPage = () => {
   };
 
   return (
-    <><NavBar onLogout={() => { } } /><div className="noticias-page-wrapper">
+    <><NavBar onLogout={handleLogout} /><div className="noticias-page-wrapper">
       <div className="container-noticias">
         <h1 className="main-title-noticias">Mural de Notícias</h1>
 

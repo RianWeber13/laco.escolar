@@ -4,9 +4,29 @@ import "./comunicacao.css";
 import NavBar from "../navbar/navBar";
 import { useState, FormEvent } from "react";
 import Image from 'next/image';
+import { useRouter } from "next/navigation";
 
 // --- Dados Estáticos (Mock) ---
-const turmasMock = [
+type Aluno = {
+  id: number;
+  nome: string;
+  foto: string;
+  responsavel: string;
+  notificacao?: boolean;
+};
+
+type Turma = {
+  nome: string;
+  alunos: Aluno[];
+};
+
+type Mensagem = {
+  autor: string;
+  texto: string;
+  tipo: 'enviada' | 'recebida';
+};
+
+const turmasMock: Turma[] = [
   {
     nome: "8º A MATUTINO",
     alunos: [
@@ -32,7 +52,7 @@ const turmasMock = [
   }
 ];
 
-const mensagensMock: { [key: number]: any[] } = {
+const mensagensMock: { [key: number]: Mensagem[] } = {
   7: [
     {
       autor: "Juliana Lima",
@@ -45,12 +65,18 @@ const mensagensMock: { [key: number]: any[] } = {
 
 export default function ComunicacaoPage() {
   const [turmaSelecionada, setTurmaSelecionada] = useState<string | null>(null);
-  const [alunoSelecionado, setAlunoSelecionado] = useState<any | null>(null);
+  const [alunoSelecionado, setAlunoSelecionado] = useState<Aluno | null>(null);
   const [mensagem, setMensagem] = useState("");
-  const [mensagens, setMensagens] = useState(mensagensMock);
+  const [mensagens, setMensagens] = useState<{ [key: number]: Mensagem[] }>(mensagensMock);
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    router.push("/");
+  };
 
   const handleSelectTurma = (turma: string) => setTurmaSelecionada(turma);
-  const handleSelectAluno = (aluno: any) => setAlunoSelecionado(aluno);
+  const handleSelectAluno = (aluno: Aluno) => setAlunoSelecionado(aluno);
   const handleBackToAlunos = () => setAlunoSelecionado(null);
   const handleBackToTurmas = () => setTurmaSelecionada(null);
 
@@ -58,10 +84,10 @@ export default function ComunicacaoPage() {
     e.preventDefault();
     if (!mensagem.trim() || !alunoSelecionado) return;
 
-    const novaMensagem = { autor: "Você", texto: mensagem, tipo: "enviada" };
+    const novaMensagem: Mensagem = { autor: "Você", texto: mensagem, tipo: "enviada" };
     const alunoId = alunoSelecionado.id;
 
-    const novasMensagensParaAluno = [...(mensagens[alunoId] || []), novaMensagem];
+    const novasMensagensParaAluno: Mensagem[] = [...(mensagens[alunoId] || []), novaMensagem];
     setMensagens({ ...mensagens, [alunoId]: novasMensagensParaAluno });
     setMensagem("");
   };
@@ -69,7 +95,7 @@ export default function ComunicacaoPage() {
   const turmaAtual = turmasMock.find(t => t.nome === turmaSelecionada);
 
   return (
-    <><NavBar onLogout={() => { } } /><div className="comunicacao-page-wrapper">
+    <><NavBar onLogout={handleLogout} /><div className="comunicacao-page-wrapper">
       <div className="container-comunicacao">
 
         {/* --- VISUALIZAÇÃO 1: SELEÇÃO DE TURMA --- */}

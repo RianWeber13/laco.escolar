@@ -7,18 +7,41 @@ import NavItem, { NavItemInterface } from './navitems';
 import { usePathname } from 'next/navigation';
 import './navbar.css';
 import { FaBars } from 'react-icons/fa';
+import { useAuth } from '../AuthContext';
 
 interface NavBarProps {
   onLogout: () => void;
 }
 
 export default function NavBar({ onLogout }: NavBarProps) {
-  const items: NavItemInterface[] = [
-    { url: '/noticias', label: 'Notícias' },
-    { url: '/calendario', label: 'Calendário Escolar' },
-    { url: '/atividades', label: 'Atividades' },
-    { url: '/comunicacao', label: 'Comunicação' },
-  ];
+  const { user } = useAuth();
+  let items: NavItemInterface[] = [];
+  if (user) {
+    if (user.role === 'DIRETOR' || user.role === 'COORDENADOR') {
+      items = [
+        { url: '/noticias', label: 'Notícias' },
+        { url: '/calendario', label: 'Calendário Escolar' },
+        { url: '/atividades', label: 'Atividades' },
+        { url: '/comunicacao', label: 'Comunicação' },
+        { url: '/usuarios', label: 'Usuários' },
+        { url: '/turmas', label: 'Turmas' },
+      ];
+    } else if (user.role === 'PROFESSOR') {
+      items = [
+        { url: '/noticias', label: 'Notícias' },
+        { url: '/calendario', label: 'Calendário Escolar' },
+        { url: '/atividades', label: 'Atividades' },
+        { url: '/comunicacao', label: 'Comunicação' },
+        { url: '/turmas', label: 'Minhas Turmas' },
+      ];
+    } else if (user.role === 'RESPONSAVEL') {
+      items = [
+        { url: '/noticias', label: 'Notícias' },
+        { url: '/calendario', label: 'Calendário Escolar' },
+        { url: '/comunicacao', label: 'Comunicação' },
+      ];
+    }
+  }
 
   const pathname = usePathname();
   const [openMenu, setOpenMenu] = useState(false);
@@ -63,8 +86,8 @@ export default function NavBar({ onLogout }: NavBarProps) {
         {/* Seção do Usuário */}
         <div className="user-section">
           <div className="user-info">
-            <span className="user-name">Docente Ana</span>
-            <span className="user-details">Escola Estadual La Salle | Turma 8ºA - Matutino</span>
+            <span className="user-name">{user?.nome || 'Usuário'}</span>
+            <span className="user-details">{user?.role ? user.role.charAt(0) + user.role.slice(1).toLowerCase() : ''}</span>
           </div>
           <button onClick={onLogout} className="btn-sair">
             SAIR

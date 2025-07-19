@@ -2,8 +2,8 @@
 
 import "./calendario.css";
 import NavBar from "../navbar/navBar";
-import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 // Definição do tipo para o dia marcado (simplificado)
 type DiaFeriado = {
@@ -16,10 +16,15 @@ type DiasMarcadosState = {
 };
 
 export default function CalendarioPage() {
-  const router = useRouter();
   const [mes, setMes] = useState(new Date().getMonth());
   const [ano, setAno] = useState(new Date().getFullYear());
   const [diasMarcados, setDiasMarcados] = useState<DiasMarcadosState>({});
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    router.push("/");
+  };
 
   const nomesMeses = [
     "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
@@ -35,7 +40,7 @@ export default function CalendarioPage() {
         const feriadosApi = await res.json();
         
         const novosFeriados: DiasMarcadosState = {};
-        feriadosApi.forEach((feriado: any) => {
+        feriadosApi.forEach((feriado: { date: string; name: string }) => {
           // CORREÇÃO DA DATA: Adiciona T00:00:00 para forçar o fuso horário local
           const data = new Date(`${feriado.date}T00:00:00`);
           const chave = `${data.getFullYear()}-${data.getMonth() + 1}-${data.getDate()}`;
@@ -74,7 +79,7 @@ export default function CalendarioPage() {
   };
 
   return (
-    <><NavBar onLogout={() => { } } />
+    <><NavBar onLogout={handleLogout} />
     <div className="calendario-page-wrapper">
       <div className="container-calendario">
         <div className="calendario-visual-container">
@@ -104,6 +109,13 @@ export default function CalendarioPage() {
                 </div>
               );
             })}
+          </div>
+          {/* Legenda dentro do container amarelo */}
+          <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '1rem' }}>
+              <span style={{ display: 'inline-block', width: 24, height: 24, background: '#fed7d7', border: '1px solid #c53030', borderRadius: 6, verticalAlign: 'middle' }}></span>
+              <span style={{ color: '#c53030', fontWeight: 600 }}>Feriado</span>
+            </span>
           </div>
         </div>
       </div>

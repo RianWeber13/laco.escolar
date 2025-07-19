@@ -4,33 +4,24 @@ import "./login.css";
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useAuth } from "../AuthContext";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  const router = useRouter(); 
+  const { login, loading } = useAuth();
+  const router = useRouter();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setIsLoading(true);
     setError("");
-
-    if (!email || !password) {
-      setError("Por favor, preencha todos os campos.");
-      setIsLoading(false);
-      return;
-    }
-
-    await new Promise(r => setTimeout(r, 1000));
-    if (email === "teste@escola.com" && password === "123") {
-      router.push("/noticias"); 
-    } else {
+    const ok = await login(email, password);
+    if (!ok) {
       setError("Email ou senha inválidos.");
+    } else {
+      router.push("/noticias");
     }
-    setIsLoading(false);
   };
 
   return (
@@ -68,7 +59,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="input-field"
-                disabled={isLoading}
+                disabled={loading}
                 required
               />
               <input
@@ -77,11 +68,11 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="input-field"
-                disabled={isLoading}
+                disabled={loading}
                 required
               />
-              <button type="submit" className="submit-button" disabled={isLoading}>
-                {isLoading ? "Entrando..." : "Entrar"}
+              <button type="submit" className="submit-button" disabled={loading}>
+                {loading ? "Entrando..." : "Entrar"}
               </button>
             </form>
           </div>

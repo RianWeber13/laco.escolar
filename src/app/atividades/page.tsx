@@ -3,6 +3,7 @@
 import "./atividades.css";
 import NavBar from "../navbar/navBar";
 import { useState, FormEvent } from "react";
+import { useRouter } from "next/navigation";
 
 // Dados estáticos iniciais
 const turmasMock = [
@@ -23,6 +24,7 @@ const atividadesIniciais = [
 export default function AtividadesPage() {
   const [atividades, setAtividades] = useState(atividadesIniciais);
   const [form, setForm] = useState({ turma: "", titulo: "", descricao: "" });
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -39,8 +41,13 @@ export default function AtividadesPage() {
     setForm({ turma: "", titulo: "", descricao: "" });
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    router.push("/");
+  };
+
   return (
-    <><NavBar onLogout={() => { } } />
+    <><NavBar onLogout={handleLogout} />
     <div className="atividades-page-wrapper">
       <div className="container-atividades">
         <h1 className="main-title-atividades">Painel de Atividades</h1>
