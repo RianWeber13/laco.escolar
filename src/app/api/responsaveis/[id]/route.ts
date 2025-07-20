@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
+import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { z } from 'zod';
 
-const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || 'secret';
 
 const responsavelSchema = z.object({ nome: z.string().min(3).optional(), telefone: z.string().min(8).optional() });

@@ -17,7 +17,8 @@ export default function NavBar({ onLogout }: NavBarProps) {
   const { user } = useAuth();
   let items: NavItemInterface[] = [];
   if (user) {
-    if (user.role === 'DIRETOR' || user.role === 'COORDENADOR') {
+    // Permissões para o Diretor
+    if (user.role === 'DIRETOR') {
       items = [
         { url: '/noticias', label: 'Notícias' },
         { url: '/calendario', label: 'Calendário Escolar' },
@@ -25,7 +26,21 @@ export default function NavBar({ onLogout }: NavBarProps) {
         { url: '/comunicacao', label: 'Comunicação' },
         { url: '/usuarios', label: 'Usuários' },
         { url: '/turmas', label: 'Turmas' },
+        { url: '/alunos', label: 'Alunos' },
+        { url: '/responsaveis', label: 'Responsáveis' },
       ];
+    // Permissões para o Coordenador
+    } else if (user.role === 'COORDENADOR') {
+      items = [
+        { url: '/noticias', label: 'Notícias' },
+        { url: '/calendario', label: 'Calendário Escolar' },
+        { url: '/atividades', label: 'Atividades' },
+        { url: '/comunicacao', label: 'Comunicação' },
+        { url: '/turmas', label: 'Turmas' },
+        { url: '/alunos', label: 'Alunos' },
+        { url: '/responsaveis', label: 'Responsáveis' },
+      ];
+    // Permissões para o Professor
     } else if (user.role === 'PROFESSOR') {
       items = [
         { url: '/noticias', label: 'Notícias' },
@@ -33,7 +48,10 @@ export default function NavBar({ onLogout }: NavBarProps) {
         { url: '/atividades', label: 'Atividades' },
         { url: '/comunicacao', label: 'Comunicação' },
         { url: '/turmas', label: 'Minhas Turmas' },
+        { url: '/alunos', label: 'Alunos' },
+        { url: '/responsaveis', label: 'Responsáveis' },
       ];
+    // Permissões para o Responsável
     } else if (user.role === 'RESPONSAVEL') {
       items = [
         { url: '/noticias', label: 'Notícias' },

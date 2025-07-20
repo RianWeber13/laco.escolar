@@ -1,6 +1,8 @@
+// src/app/api/auth/register/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { z } from 'zod';
+import bcrypt from 'bcryptjs'; // Importe o bcrypt
 
 const prisma = new PrismaClient();
 
@@ -31,12 +33,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Email ou CPF já cadastrado.' }, { status: 409 });
     }
 
-    // TODO: Adicionar hash de senha (bcrypt) em produção
+    // Criptografa a senha
+    const hashedPassword = await bcrypt.hash(senha, 10);
+
     const user = await prisma.user.create({
       data: {
         nome,
         email,
-        senha, // Em produção, use hash!
+        senha: hashedPassword, // Salva a senha criptografada
         cpf,
         telefone,
         role,
@@ -47,4 +51,4 @@ export async function POST(req: NextRequest) {
   } catch {
     return NextResponse.json({ error: 'Erro ao cadastrar usuário.' }, { status: 500 });
   }
-} 
+}
