@@ -61,36 +61,38 @@ export async function GET(req: NextRequest) {
   const turmaId = req.nextUrl.searchParams.get('turmaId');
   const nome = req.nextUrl.searchParams.get('nome');
   const responsavelId = req.nextUrl.searchParams.get('responsavelId');
-  if (!turmaId) {
-    return NextResponse.json({ error: 'turmaId é obrigatório.' }, { status: 400 });
-  }
-  let where: any = { turmaId };
+  
+  const where: Record<string, unknown> = {};
+  if (turmaId) where.turmaId = turmaId;
   if (nome) where.nome = { contains: nome, mode: 'insensitive' };
   if (responsavelId) where.responsavelId = responsavelId;
+  
   // Professor só vê alunos das suas turmas, responsável só vê alunos dos filhos
   let alunos;
   if (user.role === 'PROFESSOR') {
-    const turma = await prisma.turma.findUnique({
-      where: { id: turmaId },
-      include: { professores: true },
+    // Buscar turmas do professor
+    const turmasProfessor = await prisma.turma.findMany({
+      where: { professores: { some: { id: user.id } } },
+      select: { id: true }
     });
-    if (!turma || !turma.professores.some((p) => p.id === user.id)) {
-      return NextResponse.json({ error: 'Acesso negado.' }, { status: 403 });
-    }
+    const turmaIds = turmasProfessor.map(t => t.id);
+    where.turmaId = { in: turmaIds };
+    
     alunos = await prisma.aluno.findMany({
       where,
-      include: { responsavel: true },
+      include: { turma: true, responsavel: true },
     });
   } else if (user.role === 'RESPONSAVEL') {
+    where.responsavelId = user.id;
     alunos = await prisma.aluno.findMany({
-      where: { ...where, responsavelId: user.id },
-      include: { responsavel: true },
+      where,
+      include: { turma: true, responsavel: true },
     });
   } else {
     // Diretor e coordenador podem ver todos
     alunos = await prisma.aluno.findMany({
       where,
-      include: { responsavel: true },
+      include: { turma: true, responsavel: true },
     });
   }
   return NextResponse.json({ alunos });
